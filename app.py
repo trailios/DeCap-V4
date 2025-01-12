@@ -217,7 +217,6 @@ def image_solver() -> tuple[Response, int] | Response:
                         "roblox_join",
                         "ea",
                         "github-signup",
-                        "asurion",
                         "demo",
                         "roblox_wall",
                         "airbnb-register",
