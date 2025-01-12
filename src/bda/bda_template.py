@@ -72,12 +72,6 @@ class FunCaptchaSession:
             self.site_url = "https://octocaptcha.com"
             self.capi_mode = "inline"
             self.language = None
-        elif self.method == "asurion":
-            self.public_key = "8FC6BCF0-83CA-59A1-F97D-65E2322F5E70"
-            self.service_url = "https://asurion-api.arkoselabs.com"
-            self.site_url = "https://deviceprotection.phoneclaim.com"
-            self.capi_mode = "lightbox"
-            self.language = "en"
         elif self.method == "demo":
             self.public_key = "DF9C4D87-CB7B-4062-9FEB-BADB6ADA61E6"
             self.service_url = "https://client-api.arkoselabs.com"
@@ -252,22 +246,6 @@ class FunCaptchaOptions:
                 "client_config__language": None,
                 "client_config__surl": "https://github-api.arkoselabs.com",
                 "c8480e29a": str(self.hashing("https://github-api.arkoselabs.com"))
-                + "\u2062",
-                "client_config__triggered_inline": False,
-            }
-        elif self.method == "asurion":
-            self.options = {
-                "document__referrer": "https://deviceprotection.phoneclaim.com/",
-                "window__ancestor_origins": [
-                    "https://deviceprotection.phoneclaim.com",
-                ],
-                "window__tree_index": [0],
-                "window__tree_structure": "[[],[]]",
-                "window__location_href": f"https://asurion-api.arkoselabs.com/v2/{capi_version}/enforcement.{enforcement_hash}.html",
-                "client_config__sitedata_location_href": "https://deviceprotection.phoneclaim.com/verizon/en-us/workflow/start#!",
-                "client_config__language": "en",
-                "client_config__surl": "https://asurion-api.arkoselabs.com",
-                "c8480e29a": str(self.hashing("https://asurion-api.arkoselabs.com"))
                 + "\u2062",
                 "client_config__triggered_inline": False,
             }
