@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DeCap V4 Documentation</title>
+  
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+  />
+
+  <style>
+    /* ------------------------------
+       GLOBAL DARK THEME STYLING
+    ------------------------------ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0d0d0d;
+      color: #f4f4f4;
+      font-family: "Rubik", sans-serif;
+    }
+
+    a,
+    a:hover {
+      text-decoration: none;
+      color: #ca7bfd;
+    }
+
+    /* Smooth transitions on hover/focus states */
+    a:hover,
+    button:hover,
+    .accordion-button:hover {
+      transition: all 0.2s ease;
+    }
+
+    /* ------------------------------
+       HEADER (HERO SECTION)
+    ------------------------------ */
+    header {
+      position: relative;
+      padding: 6rem 1rem 7rem; 
+      background: linear-gradient(160deg, #7b2cbf 0%, #240046 100%);
+      color: #fff;
+      text-align: center;
+      overflow: hidden; /* So the decorative wave doesn’t cause scrollbars */
+    }
+
+    header .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    }
+
+    header .hero-subtitle {
+      font-size: 1.2rem;
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Decorative wave at the bottom of the header */
+    .header-wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: url('data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%23ffffff" fill-opacity="1" d="M0,224L40,213.3C80,203,160,181,240,154.7C320,128,400,96,480,74.7C560,53,640,43,720,37.3C800,32,880,32,960,37.3C1040,43,1120,53,1200,53.3C1280,53,1360,43,1400,37.3L1440,32L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path></svg>');
+      background-repeat: no-repeat;
+      background-size: cover;
+      transform: translateY(1px); /* tiny shift to hide pixel gap */
+    }
+
+    /* ------------------------------
+       MAIN CONTENT
+    ------------------------------ */
+    main {
+      position: relative;
+      z-index: 2; /* Ensure content is above the wave */
+      margin-top: -1px; /* helps seamlessly connect with wave */
+      padding: 2rem 1rem 3rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Card-like section, but using a custom "dark-block" style */
+    .dark-block {
+      background-color: #1b1b1b;
+      border: 1px solid #2f2f2f;
+      border-radius: 0.5rem;
+      margin: 2rem 0;
+      padding: 1.5rem;
+    }
+
+    .dark-block h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .dark-block p {
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* Table styling for a better dark appearance */
+    .table thead th {
+      background-color: #2b2b2b;
+      color: #fff;
+      border-bottom: 2px solid #3f3f3f;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+      border: 1px solid #3f3f3f;
+      vertical-align: middle;
+    }
+
+    /* ------------------------------
+       ACCORDION STYLING
+    ------------------------------ */
+    .accordion-button {
+      background-color: #2c2c2c;
+      color: #fff;
+      border-radius: 0;
+      border: none;
+      padding: 1rem;
+      font-weight: 500;
+    }
+
+    .accordion-button:focus {
+      box-shadow: none;
+    }
+
+    .accordion-button:hover {
+      background-color: #3a3a3a;
+    }
+
+    .accordion-button:not(.collapsed) {
+      color: #ca7bfd;
+      background-color: #3a3a3a;
+    }
+
+    .accordion-button i {
+      margin-left: 0.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .accordion-button:not(.collapsed) i {
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      background-color: #1f1f1f;
+      color: #f4f4f4;
+    }
+
+    /* ------------------------------
+       LIST STYLING
+    ------------------------------ */
+    .icon-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    .icon-list li {
+      padding: 0.3rem 0;
+      font-weight: 400;
+    }
+    .icon-list li i {
+      margin-right: 0.5rem;
+      color: #ca7bfd;
+    }
+
+    /* ------------------------------
+       FOOTER
+    ------------------------------ */
+    footer {
+      background-color: #0c0c0c;
+      color: #e0e0e0;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    footer a {
+      color: #ca7bfd;
+      font-weight: 400;
+    }
+
+    footer a:hover {
+      color: #af63e8;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER / HERO SECTION -->
+  <header>
+    <div class="container">
+      <h1 class="hero-title">DeCap V4 Documentation</h1>
+      <p class="hero-subtitle">
+        A comprehensive guide for developers to harness our image classification &amp; captcha solving API.
+      </p>
+    </div>
+    <!-- Decorative wave at the bottom of the header -->
+    <div class="header-wave"></div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="container">
+      <!-- INTRODUCTION BLOCK -->
+      <section class="dark-block">
+        <h2>Introduction</h2>
+        <p>
+          This API provides endpoints for image classification and FunCaptcha solving.
+          Use it to integrate advanced verification solutions into your workflow or application.
+        </p>
+        <p>
+          <strong>Base URL:</strong> <code>http://178.254.44.95:10000</code>
+        </p>
+      </section>
+
+      <!-- ENDPOINTS BLOCK -->
+      <section class="dark-block">
+        <h2>Endpoints</h2>
+        <div class="accordion" id="endpointsAccordion">
+          <!-- /classify item -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="false"
+                aria-controls="collapseOne"
+              >
+                /classify <i class="bi bi-chevron-down"></i>
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse"
+              aria-labelledby="headingOne"
+              data-bs-parent="#endpointsAccordion"
+            >
+              <div class="accordion-body">
+                <p class="mb-3">
+                  Classifies FunCaptcha images to determine the correct selection.
+                </p>
+                <p>
+                  <strong>Methods:</strong>
+                  <code>GET</code>, <code>POST</code>
+                </p>
+                <div class="table-responsive mt-3">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>variant</code></td>
+                        <td>String</td>
+                        <td>FunCaptcha variant.</td>
+                      </tr>
+                      <tr>
+                        <td><code>imagebase64</code></td>
+                        <td>String</td>
+                        <td>Base64-encoded image data.</td>
+                      </tr>
+                      <tr>
+                        <td><code>prompt</code></td>
+                        <td>String <small>(Optional)</small></td>
+                        <td>Additional text prompt for context.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="mb-0">
+                  <strong>Response:</strong> JSON object containing <code>result</code> (index and text).
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item mt-2">
+            <h2 class="accordion-header" id="headingTwo">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo"
+                aria-expanded="false"
+                aria-controls="collapseTwo"
+              >
+                /solve <i class="bi bi-chevron-down"></i>
+              </button>
+            </h2>
+            <div
+              id="collapseTwo"
+              class="accordion-collapse collapse"
+              aria-labelledby="headingTwo"
+              data-bs-parent="#endpointsAccordion"
+            >
+              <div class="accordion-body">
+                <p class="mb-3">
+                  Submits FunCaptcha challenges to be solved.
+                </p>
+                <p>
+                  <strong>Method:</strong>
+                  <code>POST</code>
+                </p>
+                <div class="table-responsive mt-3">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>key</code></td>
+                        <td>String</td>
+                        <td>API key.</td>
+                      </tr>
+                      <tr>
+                        <td><code>method</code></td>
+                        <td>String</td>
+                        <td>Captcha site solving method.</td>
+                      </tr>
+                      <tr>
+                        <td><code>proxy</code></td>
+                        <td>String</td>
+                        <td>Proxy (IP:port or user:pass@IP:port).</td>
+                      </tr>
+                      <tr>
+                        <td><code>browser</code></td>
+                        <td>String</td>
+                        <td>Browser (e.g., chrome, firefox).</td>
+                      </tr>
+                      <tr>
+                        <td><code>os</code></td>
+                        <td>String</td>
+                        <td>OS (windows, linux, mac).</td>
+                      </tr>
+                      <tr>
+                        <td><code>version</code></td>
+                        <td>Integer</td>
+                        <td>Browser version.</td>
+                      </tr>
+                      <tr>
+                        <td><code>blob</code></td>
+                        <td>String <small>(Optional/required)</small></td>
+                        <td>Captcha data or metadata.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="mb-0">
+                  <strong>Response:</strong> JSON object indicating success/failure status.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dark-block">
+        <h2>Browser Support</h2>
+        <p>Supported browsers for captcha solving:</p>
+        <ul class="icon-list">
+          <li><i class="bi bi-browser-chrome"></i>Chrome</li>
+          <li><i class="bi bi-browser-edge"></i>Edge</li>
+          <li><i class="bi bi-browser-firefox"></i>Firefox</li>
+          <li><i class="bi bi-windows"></i>Opera</li>
+          <li><i class="bi bi-apple"></i>Safari (macOS only)</li>
+        </ul>
+      </section>
+
+      <section class="dark-block">
+        <h2>Contact</h2>
+        <p>
+          Need help or more info? 
+          Reach out on Discord at
+          <a href="https://discord.com/users/@trailios"><i class="bi bi-discord"></i> @trailios</a>
+          or email 
+          <a href="mailto:admin@bombing.lol"><i class="bi bi-envelope"></i> admin@bombing.lol</a>.
+        </p>
+        <p class="mb-0">
+          Purchase FunCaptcha solves:
+          <a href="https://decaptchav4.mysellix.io/product/1k-funcaptcha-solves"><i class="bi bi-shop"></i> Shop Link</a>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2024 DeCap V4 | All Rights Reserved</p>
+  </footer>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+  ></script>
+</body>
+</html>

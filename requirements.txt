@@ -1,0 +1,12 @@
+Colr==0.9.1
+cryptography==42.0.5
+curl_cffi
+Flask==3.0.3
+mmh3==4.1.0
+numpy==2.0.0
+onnxruntime==1.18.0
+Pillow==10.0.0
+python-dotenv==1.0.1
+Requests==2.32.3
+tqdm==4.66.4
+pyexecjs
