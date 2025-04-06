@@ -78,28 +78,59 @@ def identify_user_platform(user_agent: str) -> str:
     )
 
 
-def getIpInfo(proxy: str) -> dict: # thanks sam
-    responseJson = requests.get(
-        "https://api.ipgeolocation.io/ipgeo",
-        headers={
-            "Origin": "https://ipgeolocation.io",
-            "Referer": "https://ipgeolocation.io/",
-        },
-        proxy=proxy,
-    ).json()
-    
-    timezone = responseJson["time_zone"]
-    timezoneOffset = (
-        timezone["current_time"][-3]
-        if timezone["current_time"][-4] == "0"
-        else timezone["current_time"][-4:-2]
+def getIpInfo(proxy: str = None) -> dict:
+    headers = {
+        "accept": "*/*",
+        "accept-language": "de-DE,de;q=0.6",
+        "cache-control": "no-cache",
+        "next-router-prefetch": "1",
+        "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2F%22%2C%22refresh%22%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "next-url": "/",
+        "pragma": "no-cache",
+        "priority": "u=1, i",
+        "referer": "https://ipgeolocation.io/",
+        "rsc": "1",
+        "sec-ch-ua": '"Brave";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "sec-gpc": "1",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    }
+
+    response = requests.get(
+        "https://ipgeolocation.io/what-is-my-ip",
+        headers=headers,
+        proxies={"http": f"{proxy}", "https": f"{proxy}"},
     )
-    timezoneOffset = (
-        -int(timezoneOffset) * 60
-        if timezone["current_time"][-5] == "+"
-        else int(timezoneOffset) * 60
-    )
-    return timezoneOffset # this doesnt work anymore 
+
+    match = re.search(r"current_time&quot;\s*:\s*&quot;([^&]+)", response.text)
+    istor = re.search(r"is_tor&quot;\s*:\s*(true|false)", response.text)
+    threat = re.search(r"threat_score&quot;\s*:\s*(\d+)", response.text)
+    isbot = re.search(r"is_bot&quot;\s*:\s*(true|false)", response.text)
+    isspam = re.search(r"is_spam&quot;\s*:\s*(true|false)", response.text)
+
+    if match:
+        current_time = match.group(1)
+        timezoneOffset = (
+            current_time[-3] if current_time[-4] == "0" else current_time[-4:-2]
+        )
+        timezoneOffset = (
+            -int(timezoneOffset) * 60
+            if current_time[-5] == "+"
+            else int(timezoneOffset) * 60
+        )
+        # print(f"TO: {timezoneOffset}")
+        # print(f"TOR: {istor.group(1)}")
+        # print(f"THREAT: {threat.group(1)}")
+        # print(f"BOT: {isbot.group(1)}")
+        # print(f"SPAM: {isspam.group(1)}")
+
+        return timezoneOffset
+    else:
+        raise ValueError("No valid current_time found in the input data.")
 
 
 def convert_json_to_dict(json_data: list[dict[str, str]]) -> dict[str, str]:
