@@ -1,8 +1,8 @@
 pip install -r requirements.txt
 
-thats all WoW!
+Small update to maybe make it work a little again
 
-is most likely flagged
+no promises tho
 
 
 If you need fingerprints message "@njk0mja" on discord.
