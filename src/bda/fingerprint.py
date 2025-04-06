@@ -99,7 +99,7 @@ def getIpInfo(proxy: str) -> dict: # thanks sam
         if timezone["current_time"][-5] == "+"
         else int(timezoneOffset) * 60
     )
-    return timezoneOffset
+    return timezoneOffset # this doesnt work anymore 
 
 
 def convert_json_to_dict(json_data: list[dict[str, str]]) -> dict[str, str]:
