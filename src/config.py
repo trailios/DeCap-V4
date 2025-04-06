@@ -1,7 +1,7 @@
 import os
 
-capi_version: str = "2.11.3"
-enforcement_hash: str = "507409183b9903b911945fa68e24c1d9"
+capi_version: str = "2.12.9"
+enforcement_hash: str = "0a3d1c68c34cf87e8eedcc692165053d"
 
 proxy: str = os.getenv("PROXY_URL", None)
 
