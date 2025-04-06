@@ -178,7 +178,7 @@ def generate_browser_data(
         realfingerprintjson = json.dumps(realfingerprint, separators=(",", ":"))
         realfpencrypted_data = aes_encrypt(
             realfingerprintjson,
-            f"{user_agent}{str(int(time.time() - (time.time() % 21600)))}",
+            f"{user_agent}{str(int(time.time() - int((time.time() % 21600))))}",
         )
         base64_encrypted_data = base64.b64encode(
             realfpencrypted_data.encode("utf-8")
